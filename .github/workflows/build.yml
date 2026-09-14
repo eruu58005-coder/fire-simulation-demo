@@ -2,33 +2,44 @@ name: Build Tauri App
 on:
   push:
     branches: [ main ]
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Install Rust
+          node-version: 24
+
+      - name: Install Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
-      - name: Create Tauri project
+
+      - name: Create Tauri project in subfolder app
         run: |
+          mkdir app
+          cd app
           npm create tauri-app@latest . -- --yes --template vanilla
-      - name: Replace index.html
-        run: copy index.html src-tauri\dist\index.html
-      - name: Copy assets
+
+      - name: Copy your static assets into tauri dist
         run: |
-          copy style.css src-tauri\dist\
-          copy main.js src-tauri\dist\
-          copy bg.png src-tauri\dist\
-          copy video1.mp4 src-tauri\dist\
-          copy video2.mp4 src-tauri\dist\
-      - name: Build Tauri
-        run: npm run tauri build
-      - name: Upload artifact
+          copy index.html app\src-tauri\dist\index.html
+          copy style.css app\src-tauri\dist\
+          copy main.js app\src-tauri\dist\
+          copy bg.png app\src-tauri\dist\
+          copy video1.mp4 app\src-tauri\dist\
+          copy video2.mp4 app\src-tauri\dist\
+
+      - name: Build Tauri app
+        run: |
+          cd app
+          npm run tauri build
+
+      - name: Upload MSI installer
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build
-          path: src-tauri\target\release\bundle\msi\*.msi
+          name: windows-msi-installer
+          path: app\src-tauri\target\release\bundle\msi\*.msi
