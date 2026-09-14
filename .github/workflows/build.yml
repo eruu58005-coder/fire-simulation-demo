@@ -1,0 +1,34 @@
+name: Build Tauri App
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+      - name: Create Tauri project
+        run: |
+          npm create tauri-app@latest . -- --yes --template vanilla
+      - name: Replace index.html
+        run: copy index.html src-tauri\dist\index.html
+      - name: Copy assets
+        run: |
+          copy style.css src-tauri\dist\
+          copy main.js src-tauri\dist\
+          copy bg.png src-tauri\dist\
+          copy video1.mp4 src-tauri\dist\
+          copy video2.mp4 src-tauri\dist\
+      - name: Build Tauri
+        run: npm run tauri build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: src-tauri\target\release\bundle\msi\*.msi
