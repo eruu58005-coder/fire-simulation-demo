@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>仿真灭火综合演练系统</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- 主页面：整张背景图 + 两个透明点击热区 -->
+  <div id="main-page">
+    <img class="bg-img" src="./bg.png" alt="背景">
+    <!-- 透明热区，消火栓灭火按钮 -->
+    <div id="hot-1" class="hotzone"></div>
+    <!-- 透明热区，灭火器灭火按钮 -->
+    <div id="hot-2" class="hotzone"></div>
+  </div>
+
+  <!-- 视频播放页面 -->
+  <div id="video-page" class="hidden">
+    <video id="video-player" disablepictureinpicture></video>
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+</html>

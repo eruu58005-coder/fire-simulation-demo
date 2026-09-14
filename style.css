@@ -1,0 +1,56 @@
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  width:1280px;
+  height:720px;
+  overflow:hidden;
+}
+#main-page{
+  width:100%;
+  height:100%;
+  position:relative;
+}
+.bg-img{
+  width:1280px;
+  height:720px;
+  display:block;
+}
+/* 透明点击热区 */
+.hotzone{
+  position:absolute;
+  border-radius:16px;
+  /* 鼠标悬浮叠加高亮蒙版 */
+}
+#hot-1{
+  /*消火栓灭火按钮位置*/
+  left:214px;
+  top:370px;
+  width:324px;
+  height:220px;
+}
+#hot-2{
+  /*灭火器灭火按钮位置*/
+  left:562px;
+  top:370px;
+  width:324px;
+  height:220px;
+}
+.hotzone:hover{
+  background:rgba(255,255,255,0.22);
+  cursor:pointer;
+}
+
+/* 视频页面 */
+#video-page{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#000;
+}
+#video-player{
+  width:1280px;
+  height:720px;
+  object-fit:contain;
+}
+.hidden{display:none !important;}
