@@ -24,14 +24,15 @@ jobs:
           cd app
           npm create tauri-app@latest . -- --yes --template vanilla
 
-      - name: Copy your static assets into tauri dist
+      - name: Make dist folder & copy assets
         run: |
-          copy index.html app\src-tauri\dist\index.html
-          copy style.css app\src-tauri\dist\
-          copy main.js app\src-tauri\dist\
-          copy bg.png app\src-tauri\dist\
-          copy video1.mp4 app\src-tauri\dist\
-          copy video2.mp4 app\src-tauri\dist\
+          New-Item -ItemType Directory -Force -Path app\src-tauri\dist
+          Copy-Item index.html app\src-tauri\dist\index.html
+          Copy-Item style.css app\src-tauri\dist\
+          Copy-Item main.js app\src-tauri\dist\
+          Copy-Item bg.png app\src-tauri\dist\
+          Copy-Item video1.mp4 app\src-tauri\dist\
+          Copy-Item video2.mp4 app\src-tauri\dist\
 
       - name: Build Tauri app
         run: |
